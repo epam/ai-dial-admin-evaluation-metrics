@@ -29,5 +29,8 @@ ENV PATH="/app/.venv/bin:$PATH"
 
 ENV DEEPEVAL_TELEMETRY_OPT_OUT=1
 
+# nltk punkt_tab is required for ai-dial-rag-eval
+RUN python -m nltk.downloader -d /usr/share/nltk_data punkt_tab
+
 EXPOSE 5000
 CMD ["uvicorn", "aidial_admin_evaluation_metrics.main:app", "--host", "0.0.0.0", "--port", "5000"]
