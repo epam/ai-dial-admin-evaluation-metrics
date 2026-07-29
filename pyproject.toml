@@ -1,6 +1,6 @@
 [project]
 name = "aidial-admin-evaluation-metrics"
-version = "0.1.0rc0"
+version = "0.1.0"
 description = "Service for calculating evaluation metrics for LLM workloads."
 authors = [{ name = "EPAM RAIL", email = "SpecialEPM-DIALDevTeam@epam.com" }]
 license = "Apache-2.0"
