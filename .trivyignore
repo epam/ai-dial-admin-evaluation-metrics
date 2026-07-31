@@ -1,0 +1,5 @@
+# Vulnerabilities in msgpack and setuptools.
+# The versions are present in python:3.14-alpine image, not in virtual env we use to run the service.
+# Waiting for the fix in the new version of python:3.14-alpine
+GHSA-6v7p-g79w-8964 exp:2026-08-31
+CVE-2025-47273 exp:2026-08-31
