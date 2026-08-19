@@ -23,11 +23,18 @@ RUN poetry run python -m nltk.downloader -d /usr/share/nltk_data punkt_tab
 FROM base AS server
 
 RUN adduser -u 1001 --disabled-password --gecos "" appuser
-USER appuser
 
 # Copy the sources and virtual env. No poetry.
 COPY --chown=appuser --from=builder /app .
 COPY --chown=appuser --from=builder /usr/share/nltk_data /usr/share/nltk_data
+
+# pip is not used at runtime, while its vendored dependencies (msgpack, setuptools)
+# are reported as vulnerable by the vulnerability scanners
+RUN python -m pip uninstall -y pip \
+  && rm -rf .venv/lib/python*/site-packages/pip .venv/lib/python*/site-packages/pip-*.dist-info \
+    .venv/bin/pip*
+
+USER appuser
 
 ENV PATH="/app/.venv/bin:$PATH"
 
