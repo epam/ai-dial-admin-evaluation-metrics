@@ -9,6 +9,11 @@ nox.options.sessions = ["test"]
 
 SRC = "."
 
+# Directory where tiktoken tokenizer files (e.g. cl100k_base.tiktoken) are
+# pre-downloaded before the test run, so tests never download them from
+# openaipublic.blob.core.windows.net (which VCR tests block).
+TIKTOKEN_CACHE_DIR = Path(".tiktoken_cache")
+
 
 def format_with_args(session: nox.Session, *args):
     session.run("autoflake", *args)
@@ -41,12 +46,34 @@ def format(session: nox.Session):
     format_with_args(session, SRC)
 
 
+def _preload_tiktoken_cache(session: nox.Session) -> None:
+    """Pre-download tiktoken tokenizers into a project-local cache.
+
+    Runs before the tests so tokenizer files (e.g. cl100k_base.tiktoken) are
+    available offline. This prevents tiktoken from downloading them from
+    openaipublic.blob.core.windows.net at test time.
+    """
+    cache_dir = str(TIKTOKEN_CACHE_DIR.resolve())
+    session.run(
+        "python",
+        "-c",
+        "from tiktoken.model import MODEL_TO_ENCODING, get_encoding; "
+        "[get_encoding(e) for e in set(MODEL_TO_ENCODING.values())]",
+        env={"TIKTOKEN_CACHE_DIR": cache_dir},
+    )
+
+
 @nox.session(python=[MIN_PYTHON_VERSION])
 def test(session: nox.Session):
     """Runs unit tests and doc tests"""
     session.run("poetry", "sync", "--only", "main, test", external=True)
     session.run("python", "-m", "nltk.downloader", "punkt_tab")
-    session.run("pytest", *session.posargs)
+    _preload_tiktoken_cache(session)
+    session.run(
+        "pytest",
+        *session.posargs,
+        env={"TIKTOKEN_CACHE_DIR": str(TIKTOKEN_CACHE_DIR.resolve())},
+    )
 
 
 @nox.session(python=False)
