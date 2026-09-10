@@ -1,6 +1,11 @@
 ---
 analyzer:
   skip_excluded: true
+  package_managers:
+    Poetry:
+      options:
+        # Avoid python-inspector executing dependencies setup.py (may fail with ModuleNotFoundError)
+        analyzeSetupPyInsecurely: false
 excludes:
   scopes:
     - pattern: "dev"
