@@ -35,6 +35,11 @@ FROM base AS server
 # inspect inside it.
 RUN /usr/local/bin/python -m pip uninstall -y pip
 
+# The python base image pins libuuid 2.42.1-r0 (a .python-rundeps dependency),
+# which carries several HIGH CVEs. A fixed version is available in the Alpine
+# v3.24 main repo, so upgrade just that package instead of the whole base image.
+RUN apk upgrade --no-cache libuuid
+
 RUN adduser -u 1001 --disabled-password --gecos "" appuser
 USER appuser
 
