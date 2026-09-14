@@ -1,0 +1,19 @@
+---
+analyzer:
+  skip_excluded: true
+  package_managers:
+    Poetry:
+      options:
+        # Avoid python-inspector executing dependencies setup.py (may fail with ModuleNotFoundError)
+        analyzeSetupPyInsecurely: false
+excludes:
+  scopes:
+    - pattern: "dev"
+      reason: "DEV_DEPENDENCY_OF"
+      comment: "Packages for development only."
+    - pattern: "lint"
+      reason: "DEV_DEPENDENCY_OF"
+      comment: "Packages for static code analysis only."
+    - pattern: "test"
+      reason: "TEST_DEPENDENCY_OF"
+      comment: "Packages for testing only."

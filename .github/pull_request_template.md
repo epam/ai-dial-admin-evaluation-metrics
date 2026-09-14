@@ -9,8 +9,4 @@
 
 ### Checklist
 
-<!-- [Place an '[X]' (no spaces) in all applicable fields. Please remove unrelated fields.] -->
-
-- [ ] custom check
-
 By submitting this pull request, I confirm that my contribution is made under the terms of the Apache 2.0 license.
