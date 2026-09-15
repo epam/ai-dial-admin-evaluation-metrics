@@ -8,6 +8,7 @@ venv
 .venv
 .idea
 .nox
+.tiktoken_cache
 dist
 ~*
 docs/drafts

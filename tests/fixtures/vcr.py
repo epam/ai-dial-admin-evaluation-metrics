@@ -20,6 +20,10 @@ ALLOWED_REQUEST_HEADERS: Set[str] = {
 }
 ALLOWED_RESPONSE_HEADERS: Set[str] = {"content-type"}
 
+# Host tiktoken downloads tokenizer files from. Tests must never reach it:
+# tokenizers are pre-loaded into TIKTOKEN_CACHE_DIR by the nox test session.
+BLOCKED_HOSTS: Set[str] = {"openaipublic.blob.core.windows.net"}
+
 
 class LFFilesystemPersister(FilesystemPersister):
     """Custom persister that preserves LF line endings on all platforms.
@@ -76,6 +80,12 @@ def _before_record_request(
     request_obj: Any, real_dial_host: Optional[str]
 ) -> Any:
     parsed_uri = urlparse(request_obj.uri)
+    if parsed_uri.netloc in BLOCKED_HOSTS:
+        raise RuntimeError(
+            f"Network access to {parsed_uri.netloc} is blocked in tests. "
+            "tiktoken tokenizers should be pre-loaded into TIKTOKEN_CACHE_DIR "
+            "by the nox test session, not downloaded at test time."
+        )
     if not _is_dial_request(parsed_uri, real_dial_host):
         return None
     if parsed_uri.netloc == real_dial_host:
