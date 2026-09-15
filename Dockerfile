@@ -24,8 +24,26 @@ RUN poetry run python -m nltk.downloader -d /usr/share/nltk_data punkt_tab
 ENV TIKTOKEN_CACHE_DIR=/app/tiktoken_cache
 RUN .venv/bin/python -c "from tiktoken.model import (get_encoding as load, MODEL_TO_ENCODING as models); [(print(f'Loading tiktoken tokenizer {e}...'), load(e)) for e in set(models.values())]"
 
+# pip is not needed at runtime. Uninstalling it also removes the vendored
+# setuptools 70.3.0 that pip declares in its bundled SBOM (vendor.txt /
+# bom.cdx.json), which security scanners report as vulnerable
+# (CVE-2025-47273). Uninstalling is preferred over `rm` because it also
+# removes the dist-info and the bin/pip* scripts.
+RUN /app/.venv/bin/python -m pip uninstall -y pip
+
 
 FROM base AS server
+
+# Remove the pip that ships with the python base image, so the runtime image
+# contains no importable pip. ensurepip is left in place: its bundled wheel
+# embeds a pip copy, but it is not an installed package and scanners do not
+# inspect inside it.
+RUN /usr/local/bin/python -m pip uninstall -y pip
+
+# The python base image pins libuuid 2.42.1-r0 (a .python-rundeps dependency),
+# which carries several HIGH CVEs. A fixed version is available in the Alpine
+# v3.24 main repo, so upgrade just that package instead of the whole base image.
+RUN apk upgrade --no-cache libuuid
 
 RUN adduser -u 1001 --disabled-password --gecos "" appuser
 USER appuser
