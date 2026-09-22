@@ -2,7 +2,7 @@
 
 from typing import Any, Optional
 
-import anyio
+import anyio.to_thread
 from pydantic import BaseModel, ConfigDict
 
 from aidial_admin_evaluation_metrics.metric import MetricsDescription
