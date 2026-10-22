@@ -3,6 +3,12 @@
 import logging
 
 from aidial_rag_eval.dataframe.metrics import create_generation_metrics_report
+from aidial_rag_eval.generation.types import MetricBind
+from aidial_rag_eval.metric_binds import (
+    ANSWER_TO_GROUND_TRUTH_INFERENCE,
+    CONTEXT_TO_ANSWER_INFERENCE,
+    GROUND_TRUTH_TO_ANSWER_INFERENCE,
+)
 from pydantic import BaseModel
 
 from aidial_admin_evaluation_metrics.app_config import (
@@ -41,10 +47,10 @@ from aidial_admin_evaluation_metrics.metrics.common.base_metric import (
 
 logger = logging.getLogger(__name__)
 
-METRICS_BINDS = [
-    "ground_truth_to_answer_inference",
-    "answer_to_ground_truth_inference",
-    "context_to_answer_inference",
+METRICS_BINDS: list[MetricBind] = [
+    GROUND_TRUTH_TO_ANSWER_INFERENCE,
+    ANSWER_TO_GROUND_TRUTH_INFERENCE,
+    CONTEXT_TO_ANSWER_INFERENCE,
 ]
 
 
