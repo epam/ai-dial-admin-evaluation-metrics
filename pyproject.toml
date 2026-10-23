@@ -18,7 +18,7 @@ classifiers = [
     "Topic :: Software Development :: Testing",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-requires-python = "^3.14"
+requires-python = "~3.14"
 dynamic = ["dependencies"]
 
 
@@ -32,10 +32,12 @@ requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.dependencies]
-aidial-rag-eval = ">=0.5.0"
+aidial-rag-eval = "^0.7.0"
+# spaCy language model required by aidial-rag-eval generation metrics.
+# Installed from the official model release wheel (no PyPI package exists).
+en-core-web-sm = { url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl" }
 langchain = "^1.3.9"
 langchain-openai = "^1.1.14"
-aiohttp = "^3.14.3"
 jinja2 = "^3.1.2"
 fastapi = "^0.133.0"
 starlette = "^1.3.1"

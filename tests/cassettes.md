@@ -80,6 +80,6 @@ make test ARGS="--record-mode=rewrite tests/metrics/aidial_rag_eval/test_nli_int
 - **URL normalization**: Your DIAL URL → `dial.test.example.com` in cassettes
 - **Credential filtering**: API keys automatically redacted
 - **Readable format**: Response bodies are plain JSON (not gzipped)
-- **Selective recording**: Only DIAL API calls recorded (NLTK, GitHub etc. excluded)
+- **Selective recording**: Only DIAL API calls recorded (GitHub etc. excluded)
 
 Configuration is in [`tests/conftest.py`](conftest.py) (`vcr_config` fixture).

@@ -122,7 +122,7 @@ def vcr_config():
 
     Request Filtering:
         - Only DIAL requests are recorded
-        - Other requests (NLTK, GitHub, etc.) pass through without recording
+        - Other requests (GitHub, etc.) pass through without recording
     """
     real_dial_url = os.getenv("DIAL_URL")
     real_dial_host = urlparse(real_dial_url).netloc if real_dial_url else None
