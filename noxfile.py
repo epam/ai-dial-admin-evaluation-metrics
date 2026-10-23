@@ -67,7 +67,6 @@ def _preload_tiktoken_cache(session: nox.Session) -> None:
 def test(session: nox.Session):
     """Runs unit tests and doc tests"""
     session.run("poetry", "sync", "--only", "main, test", external=True)
-    session.run("python", "-m", "nltk.downloader", "punkt_tab")
     _preload_tiktoken_cache(session)
     session.run(
         "pytest",

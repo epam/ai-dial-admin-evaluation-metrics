@@ -16,9 +16,6 @@ RUN poetry install --no-interaction --no-ansi --no-cache --no-root \
 COPY . ./
 RUN poetry install --no-interaction --no-ansi --no-cache --only main
 
-# nltk punkt_tab is required for ai-dial-rag-eval
-RUN poetry run python -m nltk.downloader -d /usr/share/nltk_data punkt_tab
-
 # Download tiktoken model encodings into a cache dir so they are bundled in
 # the image and not fetched from openaipublic.blob.core.windows.net at runtime.
 ENV TIKTOKEN_CACHE_DIR=/app/tiktoken_cache
@@ -50,7 +47,6 @@ USER appuser
 
 # Copy the sources and virtual env. No poetry.
 COPY --chown=appuser --from=builder /app .
-COPY --chown=appuser --from=builder /usr/share/nltk_data /usr/share/nltk_data
 
 ENV PATH="/app/.venv/bin:$PATH"
 

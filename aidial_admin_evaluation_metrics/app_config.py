@@ -12,11 +12,11 @@ SUPPORTED_MODELS: list[str] = [
     "gemini-2.5-flash-lite",
     "gpt-5-nano-2025-08-07",
     "anthropic.claude-haiku-4-5-20251001-v1:0",
-    "gemini-3.1-flash-lite-preview",
+    "gemini-3.1-flash-lite",
     "gpt-5-mini-2025-08-07",
     "gpt-5.4-mini-2026-03-17",
 ]
-DEFAULT_MODEL: str = "gemini-3.1-flash-lite-preview"
+DEFAULT_MODEL: str = "gemini-3.1-flash-lite"
 
 
 @dataclass(frozen=True)
