@@ -92,7 +92,7 @@ OpenTelemetry configuration is supported via standard environment variables. See
 
 The logging format is configured by the DIAL SDK. By default, the logs are in text format. You can change the logging format to JSON by setting the `DIAL_SDK_LOG_FORMAT` environment variable to `json`. The logging format can be further customized using the `DIAL_SDK_TEXT_LOG_FORMAT` or `DIAL_SDK_JSON_LOG_FORMAT` environment variables.
 
-See the [full logging documentation](https://github.com/epam/ai-dial-sdk/blob/0.39.0/docs/logging.md) for the details on the logging configuration and available logging modes.
+See the [full logging documentation](https://github.com/epam/ai-dial-sdk/blob/0.47.1/docs/logging.md) for the details on the logging configuration and available logging modes.
 
 ## Run
 
