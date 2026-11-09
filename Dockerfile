@@ -40,7 +40,8 @@ RUN /usr/local/bin/python -m pip uninstall -y pip
 # The python base image pins libuuid 2.42.1-r0 (a .python-rundeps dependency),
 # which carries several HIGH CVEs. A fixed version is available in the Alpine
 # v3.24 main repo, so upgrade just that package instead of the whole base image.
-RUN apk upgrade --no-cache libuuid
+# Same for zlib 1.3.2-r1 (CVE-2026-4738), fixed in 1.4-r0.
+RUN apk upgrade --no-cache libuuid zlib
 
 RUN adduser -u 1001 --disabled-password --gecos "" appuser
 USER appuser
