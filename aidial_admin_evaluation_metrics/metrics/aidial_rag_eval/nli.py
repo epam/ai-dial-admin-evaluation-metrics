@@ -1,5 +1,6 @@
 """Natural Language Inference (NLI) metric using ai-dial-rag-eval library."""
 
+import json
 from typing import Annotated
 
 from aidial_rag_eval.generation.inference import calculate_inference
@@ -16,6 +17,8 @@ from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.config_types import
 from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.generation_output import (
     InferenceDetails,
     InferenceField,
+    InferenceHighlight,
+    InferenceHighlightItem,
 )
 from aidial_admin_evaluation_metrics.metrics.common.base_llm_metric import (
     BaseLLMMetric,
@@ -99,8 +102,26 @@ class NLIMetric(BaseLLMMetric):
                 inference=InferenceField(
                     value=1.0,
                     details=InferenceDetails(
-                        json_explanation='[{"inference": 1.0, "hypothesis": "The Earth has a diameter of about 12,742 km.", "premise": ["The Earth is the third planet from the Sun. The diameter of the Earth is approximately 12,742 kilometers."], "explanation": "[{\\"explanation\\": \\"The statement directly repeats information given in the premise about the Earth\'s diameter.\\", \\"tag\\": \\"ENT\\", \\"statement\\": \\"The Earth has a diameter of about 12,742 km.\\"}]"}]',
-                        highlight='{"corpus": [{"text": "The Earth has a diameter of about 12,742 km.", "score": 0.0, "title": 1.0}, {"text": "", "score": 0.0}]}',
+                        json_explanation=[
+                            {
+                                "inference": 1.0,
+                                "hypothesis": "The Earth has a diameter of about 12,742 km.",
+                                "premise": [
+                                    "The Earth is the third planet from the Sun. The diameter of the Earth is approximately 12,742 kilometers."
+                                ],
+                                "explanation": '[{"explanation": "The statement directly repeats information given in the premise about the Earth\'s diameter.", "tag": "ENT", "statement": "The Earth has a diameter of about 12,742 km."}]',
+                            }
+                        ],
+                        highlight=InferenceHighlight(
+                            corpus=[
+                                InferenceHighlightItem(
+                                    text="The Earth has a diameter of about 12,742 km.",
+                                    score=0.0,
+                                    title="1.0",
+                                ),
+                                InferenceHighlightItem(text="", score=0.0),
+                            ]
+                        ),
                     ),
                 )
             ),
@@ -130,8 +151,10 @@ class NLIMetric(BaseLLMMetric):
                 inference=InferenceField(
                     value=float(result.inference),
                     details=InferenceDetails(
-                        json_explanation=result.json,
-                        highlight=result.highlight,
+                        json_explanation=json.loads(result.json),
+                        highlight=InferenceHighlight.model_validate_json(
+                            result.highlight
+                        ),
                     ),
                 )
             )

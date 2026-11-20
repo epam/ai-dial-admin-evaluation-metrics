@@ -1,9 +1,10 @@
 """Output types and helper functions for RAG evaluation generation metrics."""
 
-from typing import Annotated, Literal, TypeVar
+import json
+from typing import Annotated, Literal, TypeVar, cast
 
 import pandas as pd
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, JsonValue, field_validator
 
 from aidial_admin_evaluation_metrics.metrics.common.types import (
     MetricError,
@@ -11,21 +12,51 @@ from aidial_admin_evaluation_metrics.metrics.common.types import (
 )
 
 
+class InferenceHighlightItem(BaseModel):
+    """A segment of the highlighted text with its inference score."""
+
+    text: str = Field(description="Text of the segment.")
+    score: float = Field(
+        description="Highlight score of the segment: inference - 1 (0 means entailed, negative values mean not entailed). Delimiters have score 0.",
+    )
+    title: str | None = Field(
+        default=None,
+        description="Text to display on hover over the segment when the highlight is rendered (the inference score of the segment). Not set for delimiters between segments.",
+    )
+
+    @field_validator("title", mode="before")
+    @classmethod
+    def _title_to_str(cls, value):
+        # The library returns the inference score as a number.
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            return str(value)
+        return value
+
+
+class InferenceHighlight(BaseModel):
+    """Highlighted text showing which segments affected the inference score."""
+
+    corpus: list[InferenceHighlightItem] = Field(
+        default=[],
+        description="Consecutive segments (and delimiters) of the highlighted text.",
+    )
+
+
 class InferenceDetails(BaseModel):
     """Details about NLI-based inference calculation."""
 
     json_explanation: Annotated[
-        str,
+        JsonValue,
         Field(
-            description="String with low level details of the inference calculation in JSON format. Exact format is an implementation detail of the inference calculation and should not be relied on for any downstream use.",
+            description="Low level details of the inference calculation as a JSON value. Exact format is an implementation detail of the inference calculation and should not be relied on for any downstream use.",
         ),
-    ] = ""
+    ] = None
     highlight: Annotated[
-        str,
+        InferenceHighlight,
         Field(
             description="Highlighted text showing which segments of the text affected the inference score.",
         ),
-    ] = ""
+    ] = InferenceHighlight()
 
 
 class InferenceField(MetricOutputField):
@@ -72,8 +103,10 @@ def extract_generation_metric(
     return InferenceField(
         value=float(row[f"{prefix}_inference"]),
         details=InferenceDetails(
-            json_explanation=str(row[f"{prefix}_json"]),
-            highlight=str(row[f"{prefix}_highlight"]),
+            json_explanation=json.loads(cast(str, row[f"{prefix}_json"])),
+            highlight=InferenceHighlight.model_validate_json(
+                cast(str, row[f"{prefix}_highlight"])
+            ),
         ),
     )
 

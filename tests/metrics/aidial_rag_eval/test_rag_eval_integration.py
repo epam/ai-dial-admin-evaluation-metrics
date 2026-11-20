@@ -51,7 +51,7 @@ def test_rag_eval_direct_evaluation_with_real_llm(test_dial_config):
     assert result.recall.details.context_relevance == [0, 1]
     assert len(result.recall.details.context_highlight) == 2
     assert all(
-        len(highlight) > 0
+        len(highlight.match) > 0
         for highlight in result.recall.details.context_highlight
     )
 
@@ -67,18 +67,18 @@ def test_rag_eval_direct_evaluation_with_real_llm(test_dial_config):
     # Generation outputs
     assert result.ground_truth_to_answer.type == "value"
     assert result.ground_truth_to_answer.value == 1.0
-    assert result.ground_truth_to_answer.details.json_explanation != ""
-    assert result.ground_truth_to_answer.details.highlight != ""
+    assert result.ground_truth_to_answer.details.json_explanation
+    assert result.ground_truth_to_answer.details.highlight.corpus
 
     assert result.answer_to_ground_truth.type == "value"
     assert result.answer_to_ground_truth.value == 1.0
-    assert result.answer_to_ground_truth.details.json_explanation != ""
-    assert result.answer_to_ground_truth.details.highlight != ""
+    assert result.answer_to_ground_truth.details.json_explanation
+    assert result.answer_to_ground_truth.details.highlight.corpus
 
     assert result.context_to_answer.type == "value"
     assert result.context_to_answer.value == 1.0
-    assert result.context_to_answer.details.json_explanation != ""
-    assert result.context_to_answer.details.highlight != ""
+    assert result.context_to_answer.details.json_explanation
+    assert result.context_to_answer.details.highlight.corpus
 
 
 @pytest.mark.integration
@@ -135,18 +135,18 @@ def test_rag_eval_evaluate_via_api(app_client):
     # Generation fields
     assert parsed.ground_truth_to_answer.type == "value"
     assert parsed.ground_truth_to_answer.value == 1.0
-    assert parsed.ground_truth_to_answer.details.json_explanation != ""
-    assert parsed.ground_truth_to_answer.details.highlight != ""
+    assert parsed.ground_truth_to_answer.details.json_explanation
+    assert parsed.ground_truth_to_answer.details.highlight.corpus
 
     assert parsed.answer_to_ground_truth.type == "value"
     assert parsed.answer_to_ground_truth.value == 1.0
-    assert parsed.answer_to_ground_truth.details.json_explanation != ""
-    assert parsed.answer_to_ground_truth.details.highlight != ""
+    assert parsed.answer_to_ground_truth.details.json_explanation
+    assert parsed.answer_to_ground_truth.details.highlight.corpus
 
     assert parsed.context_to_answer.type == "value"
     assert parsed.context_to_answer.value == 1.0
-    assert parsed.context_to_answer.details.json_explanation != ""
-    assert parsed.context_to_answer.details.highlight != ""
+    assert parsed.context_to_answer.details.json_explanation
+    assert parsed.context_to_answer.details.highlight.corpus
 
 
 @pytest.mark.integration
@@ -199,17 +199,17 @@ def test_rag_eval_evaluate_via_api_partial(app_client):
     # Only the diameter statement is entailed from the ground truth
     assert parsed.ground_truth_to_answer.type == "value"
     assert parsed.ground_truth_to_answer.value == pytest.approx(1.0 / 3)
-    assert parsed.ground_truth_to_answer.details.json_explanation != ""
-    assert parsed.ground_truth_to_answer.details.highlight != ""
+    assert parsed.ground_truth_to_answer.details.json_explanation
+    assert parsed.ground_truth_to_answer.details.highlight.corpus
 
     # Answer to ground truth: one entailment, one contradiction
     assert parsed.answer_to_ground_truth.type == "value"
     assert parsed.answer_to_ground_truth.value == pytest.approx(0.5)
-    assert parsed.answer_to_ground_truth.details.json_explanation != ""
-    assert parsed.answer_to_ground_truth.details.highlight != ""
+    assert parsed.answer_to_ground_truth.details.json_explanation
+    assert parsed.answer_to_ground_truth.details.highlight.corpus
 
     # Context to answer: two entailed statements out of three
     assert parsed.context_to_answer.type == "value"
     assert parsed.context_to_answer.value == pytest.approx(2.0 / 3)
-    assert parsed.context_to_answer.details.json_explanation != ""
-    assert parsed.context_to_answer.details.highlight != ""
+    assert parsed.context_to_answer.details.json_explanation
+    assert parsed.context_to_answer.details.highlight.corpus
