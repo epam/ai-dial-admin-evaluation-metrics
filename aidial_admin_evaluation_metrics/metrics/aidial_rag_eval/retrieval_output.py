@@ -12,6 +12,25 @@ from aidial_admin_evaluation_metrics.metrics.common.types import (
 )
 
 
+class ContextHighlightItem(BaseModel):
+    """A part of the context chunk with the facts found in it."""
+
+    text: str = Field(description="Text of the part of the context chunk.")
+    facts: list[int] = Field(
+        default=[],
+        description="Indexes of the ground truth facts matched in this part of the text.",
+    )
+
+
+class ContextHighlight(BaseModel):
+    """Highlighted facts in a context chunk."""
+
+    match: list[ContextHighlightItem] = Field(
+        default=[],
+        description="Consecutive parts of the context chunk with the facts matched in each of them.",
+    )
+
+
 class RecallDetails(BaseModel):
     """Details about the recall calculation."""
 
@@ -23,9 +42,9 @@ class RecallDetails(BaseModel):
         default=[],
         description="Array where each element is the count of facts found in the corresponding context chunk",
     )
-    context_highlight: list[str] = Field(
+    context_highlight: list[ContextHighlight] = Field(
         default=[],
-        description="Array of JSON strings showing highlighted facts in each context chunk",
+        description="Array of objects showing highlighted facts in each context chunk",
     )
 
 
@@ -107,6 +126,9 @@ def extract_recall(row: pd.Series | dict) -> RecallField | MetricError:
         details=RecallDetails(
             facts_ranks=row["facts_ranks"].tolist(),
             context_relevance=row["context_relevance"].tolist(),
-            context_highlight=row["context_highlight"].tolist(),
+            context_highlight=[
+                ContextHighlight.model_validate_json(h)
+                for h in row["context_highlight"].tolist()
+            ],
         ),
     )

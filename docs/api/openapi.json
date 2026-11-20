@@ -76,6 +76,93 @@
                     }
                   }
                 },
+                "set_comparison perfect match": {
+                  "value": {
+                    "metric_name": "set_comparison",
+                    "config": {},
+                    "input": {
+                      "actual": [
+                        "a",
+                        "b",
+                        "c"
+                      ],
+                      "ground_truth": [
+                        "a",
+                        "b",
+                        "c"
+                      ]
+                    }
+                  }
+                },
+                "set_comparison partial match": {
+                  "value": {
+                    "metric_name": "set_comparison",
+                    "config": {},
+                    "input": {
+                      "actual": [
+                        "a",
+                        "b",
+                        "x"
+                      ],
+                      "ground_truth": [
+                        "a",
+                        "b",
+                        "c"
+                      ]
+                    }
+                  }
+                },
+                "multiple_sets_comparison perfect match": {
+                  "value": {
+                    "metric_name": "multiple_sets_comparison",
+                    "config": {},
+                    "input": {
+                      "actual": {
+                        "fruits": [
+                          "apple",
+                          "banana"
+                        ],
+                        "colors": [
+                          "red",
+                          "blue"
+                        ]
+                      },
+                      "ground_truth": {
+                        "fruits": [
+                          "apple",
+                          "banana"
+                        ],
+                        "colors": [
+                          "red",
+                          "blue"
+                        ]
+                      }
+                    }
+                  }
+                },
+                "multiple_sets_comparison partial match with missing key": {
+                  "value": {
+                    "metric_name": "multiple_sets_comparison",
+                    "config": {},
+                    "input": {
+                      "actual": {
+                        "fruits": [
+                          "apple",
+                          "cherry"
+                        ]
+                      },
+                      "ground_truth": {
+                        "fruits": [
+                          "apple",
+                          "banana"
+                        ],
+                        "colors": [
+                          "red"
+                        ]
+                      }
+                    }
+                  }
+                },
                 "aidial_rag_eval.retrieval": {
                   "value": {
                     "metric_name": "aidial_rag_eval.retrieval",
@@ -99,7 +186,7 @@
                   "value": {
                     "metric_name": "aidial_rag_eval.nli",
                     "config": {
-                      "model": "gemini-2.5-flash-lite"
+                      "model": "gemini-3.1-flash-lite"
                     },
                     "input": {
                       "premise": "The Earth is the third planet from the Sun. The diameter of the Earth is approximately 12,742 kilometers.",
@@ -111,7 +198,7 @@
                   "value": {
                     "metric_name": "aidial_rag_eval.generation",
                     "config": {
-                      "model": "gemini-2.5-flash-lite"
+                      "model": "gemini-3.1-flash-lite"
                     },
                     "input": {
                       "question": "What is the diameter of Earth?",
@@ -132,7 +219,7 @@
                     "metric_name": "aidial_rag_eval.rag_eval",
                     "config": {
                       "matcher": "citation",
-                      "model": "gemini-2.5-flash-lite"
+                      "model": "gemini-3.1-flash-lite"
                     },
                     "input": {
                       "question": "What is the diameter of Earth?",
@@ -151,7 +238,7 @@
                   "value": {
                     "metric_name": "deepeval.answer_relevancy",
                     "config": {
-                      "model": "gemini-2.5-flash-lite",
+                      "model": "gemini-3.1-flash-lite",
                       "threshold": 0.5,
                       "strict_mode": false,
                       "include_reason": true
@@ -166,7 +253,7 @@
                   "value": {
                     "metric_name": "deepeval.faithfulness",
                     "config": {
-                      "model": "gemini-2.5-flash-lite",
+                      "model": "gemini-3.1-flash-lite",
                       "threshold": 0.5,
                       "strict_mode": false,
                       "include_reason": true,
@@ -185,7 +272,7 @@
                   "value": {
                     "metric_name": "deepeval.contextual_precision",
                     "config": {
-                      "model": "gemini-2.5-flash-lite",
+                      "model": "gemini-3.1-flash-lite",
                       "threshold": 0.5,
                       "strict_mode": false,
                       "include_reason": true
@@ -205,7 +292,7 @@
                   "value": {
                     "metric_name": "deepeval.contextual_recall",
                     "config": {
-                      "model": "gemini-2.5-flash-lite",
+                      "model": "gemini-3.1-flash-lite",
                       "threshold": 0.5,
                       "strict_mode": false,
                       "include_reason": true
@@ -224,7 +311,7 @@
                   "value": {
                     "metric_name": "deepeval.contextual_relevancy",
                     "config": {
-                      "model": "gemini-2.5-flash-lite",
+                      "model": "gemini-3.1-flash-lite",
                       "threshold": 0.5,
                       "strict_mode": false,
                       "include_reason": true
@@ -242,7 +329,7 @@
                   "value": {
                     "metric_name": "deepeval.g_eval",
                     "config": {
-                      "model": "gemini-2.5-flash-lite",
+                      "model": "gemini-3.1-flash-lite",
                       "threshold": 0.5,
                       "strict_mode": false,
                       "eval_name": "Correctness",
@@ -256,6 +343,225 @@
                       "input": "What is the diameter of the Earth?",
                       "actual_output": "The diameter of the Earth is approximately 12,742 kilometers.",
                       "expected_output": "The diameter of the Earth is approximately 12,742 kilometers."
+                    }
+                  }
+                },
+                "ragas.faithfulness": {
+                  "value": {
+                    "metric_name": "ragas.faithfulness",
+                    "config": {
+                      "model": "gemini-3.1-flash-lite"
+                    },
+                    "input": {
+                      "user_input": "When was the Eiffel Tower built?",
+                      "response": "The Eiffel Tower was built in 1889.",
+                      "retrieved_contexts": [
+                        "The Eiffel Tower is a wrought-iron lattice tower on the Champ de Mars in Paris. It was constructed from 1887 to 1889."
+                      ]
+                    }
+                  }
+                },
+                "ragas.context_precision": {
+                  "value": {
+                    "metric_name": "ragas.context_precision",
+                    "config": {
+                      "model": "gemini-3.1-flash-lite"
+                    },
+                    "input": {
+                      "user_input": "What year was the Eiffel Tower completed?",
+                      "reference": "The Eiffel Tower was completed in 1889.",
+                      "retrieved_contexts": [
+                        "The Eiffel Tower was completed in 1889 for the World's Fair.",
+                        "Paris is the capital of France."
+                      ]
+                    }
+                  }
+                },
+                "ragas.context_recall": {
+                  "value": {
+                    "metric_name": "ragas.context_recall",
+                    "config": {
+                      "model": "gemini-3.1-flash-lite"
+                    },
+                    "input": {
+                      "user_input": "What year was the Eiffel Tower completed?",
+                      "reference": "The Eiffel Tower was completed in 1889.",
+                      "retrieved_contexts": [
+                        "The Eiffel Tower was completed in 1889 for the World's Fair."
+                      ]
+                    }
+                  }
+                },
+                "ragas.answer_relevancy": {
+                  "value": {
+                    "metric_name": "ragas.answer_relevancy",
+                    "config": {
+                      "model": "gemini-3.1-flash-lite",
+                      "embeddings_model": "text-embedding-ada-002"
+                    },
+                    "input": {
+                      "user_input": "What year was the Eiffel Tower completed?",
+                      "response": "The Eiffel Tower was completed in 1889."
+                    }
+                  }
+                },
+                "ragas.noise_sensitivity": {
+                  "value": {
+                    "metric_name": "ragas.noise_sensitivity",
+                    "config": {
+                      "model": "gemini-3.1-flash-lite",
+                      "mode": "relevant"
+                    },
+                    "input": {
+                      "user_input": "When was the Eiffel Tower built?",
+                      "response": "The Eiffel Tower was built in 1889.",
+                      "reference": "The Eiffel Tower was constructed from 1887 to 1889.",
+                      "retrieved_contexts": [
+                        "The Eiffel Tower was constructed from 1887 to 1889 as the entrance arch for the 1889 World's Fair."
+                      ]
+                    }
+                  }
+                },
+                "ragas.tool_call_accuracy": {
+                  "value": {
+                    "metric_name": "ragas.tool_call_accuracy",
+                    "config": {
+                      "strict_order": true
+                    },
+                    "input": {
+                      "tools_called": [
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Paris"
+                          }
+                        },
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Berlin"
+                          }
+                        }
+                      ],
+                      "reference_tool_calls": [
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Paris"
+                          }
+                        },
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Berlin"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "ragas.tool_call_f1": {
+                  "value": {
+                    "metric_name": "ragas.tool_call_f1",
+                    "config": {},
+                    "input": {
+                      "tools_called": [
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Paris"
+                          }
+                        },
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Berlin"
+                          }
+                        }
+                      ],
+                      "reference_tool_calls": [
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Paris"
+                          }
+                        },
+                        {
+                          "name": "get_weather",
+                          "args": {
+                            "location": "Berlin"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                },
+                "deepdiff matches strings": {
+                  "value": {
+                    "metric_name": "deepdiff",
+                    "config": {},
+                    "input": {
+                      "actual": "test answer",
+                      "ground_truth": "test answer"
+                    }
+                  }
+                },
+                "deepdiff does not match strings": {
+                  "value": {
+                    "metric_name": "deepdiff",
+                    "config": {},
+                    "input": {
+                      "actual": "wrong answer",
+                      "ground_truth": "test answer"
+                    }
+                  }
+                },
+                "deepdiff matches lists ignoring order": {
+                  "value": {
+                    "metric_name": "deepdiff",
+                    "config": {
+                      "ignore_order": true,
+                      "number_format_notation": "f"
+                    },
+                    "input": {
+                      "actual": [
+                        3,
+                        1,
+                        2
+                      ],
+                      "ground_truth": [
+                        1,
+                        2,
+                        3
+                      ]
+                    }
+                  }
+                },
+                "deepdiff matches numbers within epsilon": {
+                  "value": {
+                    "metric_name": "deepdiff",
+                    "config": {
+                      "ignore_order": false,
+                      "number_format_notation": "f",
+                      "math_epsilon": 20.0
+                    },
+                    "input": {
+                      "actual": {
+                        "bbox": [
+                          1436,
+                          1071,
+                          2288,
+                          1715
+                        ]
+                      },
+                      "ground_truth": {
+                        "bbox": [
+                          1435,
+                          1071,
+                          2291,
+                          1714
+                        ]
+                      }
                     }
                   }
                 }
@@ -410,6 +716,240 @@
             }
           },
           {
+            "metric_name": "set_comparison",
+            "output": {
+              "precision": {
+                "details": {
+                  "false_negatives": [],
+                  "false_positives": [],
+                  "fn": 0,
+                  "fp": 0,
+                  "tp": 3,
+                  "true_positives": [
+                    "a",
+                    "b",
+                    "c"
+                  ]
+                },
+                "type": "value",
+                "value": 1.0
+              },
+              "recall": {
+                "details": {
+                  "false_negatives": [],
+                  "false_positives": [],
+                  "fn": 0,
+                  "fp": 0,
+                  "tp": 3,
+                  "true_positives": [
+                    "a",
+                    "b",
+                    "c"
+                  ]
+                },
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "set_comparison",
+            "output": {
+              "precision": {
+                "details": {
+                  "false_negatives": [
+                    "c"
+                  ],
+                  "false_positives": [
+                    "x"
+                  ],
+                  "fn": 1,
+                  "fp": 1,
+                  "tp": 2,
+                  "true_positives": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "value",
+                "value": 0.6666666666666666
+              },
+              "recall": {
+                "details": {
+                  "false_negatives": [
+                    "c"
+                  ],
+                  "false_positives": [
+                    "x"
+                  ],
+                  "fn": 1,
+                  "fp": 1,
+                  "tp": 2,
+                  "true_positives": [
+                    "a",
+                    "b"
+                  ]
+                },
+                "type": "value",
+                "value": 0.6666666666666666
+              }
+            }
+          },
+          {
+            "metric_name": "multiple_sets_comparison",
+            "output": {
+              "precision": {
+                "details": {
+                  "by_key": {
+                    "colors": {
+                      "fn": 0,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 1.0,
+                      "tp": 2
+                    },
+                    "fruits": {
+                      "fn": 0,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 1.0,
+                      "tp": 2
+                    }
+                  }
+                },
+                "type": "value",
+                "value": 1.0
+              },
+              "precision_soft": {
+                "details": {
+                  "allowed_keys": [
+                    "colors",
+                    "fruits"
+                  ],
+                  "by_key": {
+                    "colors": {
+                      "fn": 0,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 1.0,
+                      "tp": 2
+                    },
+                    "fruits": {
+                      "fn": 0,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 1.0,
+                      "tp": 2
+                    }
+                  },
+                  "fp_soft": 0,
+                  "tp_total": 4
+                },
+                "type": "value",
+                "value": 1.0
+              },
+              "recall": {
+                "details": {
+                  "by_key": {
+                    "colors": {
+                      "fn": 0,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 1.0,
+                      "tp": 2
+                    },
+                    "fruits": {
+                      "fn": 0,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 1.0,
+                      "tp": 2
+                    }
+                  }
+                },
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "multiple_sets_comparison",
+            "output": {
+              "precision": {
+                "details": {
+                  "by_key": {
+                    "colors": {
+                      "fn": 1,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 0.0,
+                      "tp": 0
+                    },
+                    "fruits": {
+                      "fn": 1,
+                      "fp": 1,
+                      "precision": 0.5,
+                      "recall": 0.5,
+                      "tp": 1
+                    }
+                  }
+                },
+                "type": "value",
+                "value": 0.75
+              },
+              "precision_soft": {
+                "details": {
+                  "allowed_keys": [
+                    "colors",
+                    "fruits"
+                  ],
+                  "by_key": {
+                    "colors": {
+                      "fn": 1,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 0.0,
+                      "tp": 0
+                    },
+                    "fruits": {
+                      "fn": 1,
+                      "fp": 1,
+                      "precision": 0.5,
+                      "recall": 0.5,
+                      "tp": 1
+                    }
+                  },
+                  "fp_soft": 1,
+                  "tp_total": 1
+                },
+                "type": "value",
+                "value": 0.5
+              },
+              "recall": {
+                "details": {
+                  "by_key": {
+                    "colors": {
+                      "fn": 1,
+                      "fp": 0,
+                      "precision": 1.0,
+                      "recall": 0.0,
+                      "tp": 0
+                    },
+                    "fruits": {
+                      "fn": 1,
+                      "fp": 1,
+                      "precision": 0.5,
+                      "recall": 0.5,
+                      "tp": 1
+                    }
+                  }
+                },
+                "type": "value",
+                "value": 0.25
+              }
+            }
+          },
+          {
             "metric_name": "aidial_rag_eval.retrieval",
             "output": {
               "f1": {
@@ -430,9 +970,15 @@
               "recall": {
                 "details": {
                   "context_highlight": [
-                    "",
-                    "",
-                    ""
+                    {
+                      "match": []
+                    },
+                    {
+                      "match": []
+                    },
+                    {
+                      "match": []
+                    }
                   ],
                   "context_relevance": [
                     0,
@@ -454,8 +1000,29 @@
             "output": {
               "inference": {
                 "details": {
-                  "highlight": "{\"corpus\": [{\"text\": \"The Earth has a diameter of about 12,742 km.\", \"score\": 0.0, \"title\": 1.0}, {\"text\": \"\", \"score\": 0.0}]}",
-                  "json_explanation": "[{\"inference\": 1.0, \"hypothesis\": \"The Earth has a diameter of about 12,742 km.\", \"premise\": [\"The Earth is the third planet from the Sun. The diameter of the Earth is approximately 12,742 kilometers.\"], \"explanation\": \"[{\\\"explanation\\\": \\\"The statement directly repeats information given in the premise about the Earth's diameter.\\\", \\\"tag\\\": \\\"ENT\\\", \\\"statement\\\": \\\"The Earth has a diameter of about 12,742 km.\\\"}]\"}]"
+                  "highlight": {
+                    "corpus": [
+                      {
+                        "score": 0.0,
+                        "text": "The Earth has a diameter of about 12,742 km.",
+                        "title": "1.0"
+                      },
+                      {
+                        "score": 0.0,
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "json_explanation": [
+                    {
+                      "explanation": "[{\"explanation\": \"The statement directly repeats information given in the premise about the Earth's diameter.\", \"tag\": \"ENT\", \"statement\": \"The Earth has a diameter of about 12,742 km.\"}]",
+                      "hypothesis": "The Earth has a diameter of about 12,742 km.",
+                      "inference": 1.0,
+                      "premise": [
+                        "The Earth is the third planet from the Sun. The diameter of the Earth is approximately 12,742 kilometers."
+                      ]
+                    }
+                  ]
                 },
                 "type": "value",
                 "value": 1.0
@@ -467,24 +1034,87 @@
             "output": {
               "answer_to_ground_truth": {
                 "details": {
-                  "highlight": "{\"corpus\": [{\"text\": \"The diameter of Earth is about 12,742 km.\", \"score\": 0.0, \"title\": 1.0}, {\"text\": \"\", \"score\": 0.0}]}",
-                  "json_explanation": "[{\"inference\": 1.0, \"hypothesis\": \"The diameter of Earth is about 12,742 km.\", \"premise\": [\"What is the diameter of Earth?\nEarth is 12,742 km wide.\"], \"explanation\": \"[{\\\"explanation\\\": \\\"The statement directly confirms the width of the Earth as given in the premise.\\\", \\\"tag\\\": \\\"ENT\\\", \\\"statement\\\": \\\"The diameter of Earth is about 12,742 km.\\\"}]\"}]"
+                  "highlight": {
+                    "corpus": [
+                      {
+                        "score": 0.0,
+                        "text": "The diameter of Earth is about 12,742 km.",
+                        "title": "1.0"
+                      },
+                      {
+                        "score": 0.0,
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "json_explanation": [
+                    {
+                      "explanation": "[{\"explanation\": \"The statement directly confirms the width of the Earth as given in the premise.\", \"tag\": \"ENT\", \"statement\": \"The diameter of Earth is about 12,742 km.\"}]",
+                      "hypothesis": "The diameter of Earth is about 12,742 km.",
+                      "inference": 1.0,
+                      "premise": [
+                        "What is the diameter of Earth?\nEarth is 12,742 km wide."
+                      ]
+                    }
+                  ]
                 },
                 "type": "value",
                 "value": 1.0
               },
               "context_to_answer": {
                 "details": {
-                  "highlight": "{\"corpus\": [{\"text\": \"Earth is 12,742 km wide.\", \"score\": -1.0, \"title\": 0.0}, {\"text\": \"\", \"score\": 0.0}]}",
-                  "json_explanation": "[{\"inference\": 0.0, \"hypothesis\": \"Earth is 12,742 km wide.\", \"premise\": [\"Earth facts\"], \"explanation\": \"[{\\\"explanation\\\": \\\"The premise is too general and does not provide the specific width of the Earth, making this statement neutral.\\\", \\\"tag\\\": \\\"NEUT\\\", \\\"statement\\\": \\\"Earth is 12,742 km wide.\\\"}]\"}]"
+                  "highlight": {
+                    "corpus": [
+                      {
+                        "score": -1.0,
+                        "text": "Earth is 12,742 km wide.",
+                        "title": "0.0"
+                      },
+                      {
+                        "score": 0.0,
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "json_explanation": [
+                    {
+                      "explanation": "[{\"explanation\": \"The premise is too general and does not provide the specific width of the Earth, making this statement neutral.\", \"tag\": \"NEUT\", \"statement\": \"Earth is 12,742 km wide.\"}]",
+                      "hypothesis": "Earth is 12,742 km wide.",
+                      "inference": 0.0,
+                      "premise": [
+                        "Earth facts"
+                      ]
+                    }
+                  ]
                 },
                 "type": "value",
                 "value": 0.0
               },
               "ground_truth_to_answer": {
                 "details": {
-                  "highlight": "{\"corpus\": [{\"text\": \"Earth is 12,742 km wide.\", \"score\": 0.0, \"title\": 1.0}, {\"text\": \"\", \"score\": 0.0}]}",
-                  "json_explanation": "[{\"inference\": 1.0, \"hypothesis\": \"Earth is 12,742 km wide.\", \"premise\": [\"What is the diameter of Earth?\nThe diameter of Earth is about 12,742 km.\"], \"explanation\": \"[{\\\"explanation\\\": \\\"The statement directly restates the diameter of Earth as given in the premise.\\\", \\\"tag\\\": \\\"ENT\\\", \\\"statement\\\": \\\"Earth is 12,742 km wide.\\\"}]\"}]"
+                  "highlight": {
+                    "corpus": [
+                      {
+                        "score": 0.0,
+                        "text": "Earth is 12,742 km wide.",
+                        "title": "1.0"
+                      },
+                      {
+                        "score": 0.0,
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "json_explanation": [
+                    {
+                      "explanation": "[{\"explanation\": \"The statement directly restates the diameter of Earth as given in the premise.\", \"tag\": \"ENT\", \"statement\": \"Earth is 12,742 km wide.\"}]",
+                      "hypothesis": "Earth is 12,742 km wide.",
+                      "inference": 1.0,
+                      "premise": [
+                        "What is the diameter of Earth?\nThe diameter of Earth is about 12,742 km."
+                      ]
+                    }
+                  ]
                 },
                 "type": "value",
                 "value": 1.0
@@ -496,16 +1126,58 @@
             "output": {
               "answer_to_ground_truth": {
                 "details": {
-                  "highlight": "{\"corpus\": [{\"text\": \"The diameter of Earth is about 12,742 km.\", \"score\": 0.0, \"title\": 1.0}, {\"text\": \"\", \"score\": 0.0}]}",
-                  "json_explanation": "[{\"inference\": 1.0, \"hypothesis\": \"The diameter of Earth is about 12,742 km.\", \"premise\": [\"What is the diameter of Earth?\nEarth is 12,742 km wide.\"], \"explanation\": \"[{\\\"explanation\\\": \\\"The statement directly confirms the width of the Earth as given in the premise.\\\", \\\"tag\\\": \\\"ENT\\\", \\\"statement\\\": \\\"The diameter of Earth is about 12,742 km.\\\"}]\"}]"
+                  "highlight": {
+                    "corpus": [
+                      {
+                        "score": 0.0,
+                        "text": "The diameter of Earth is about 12,742 km.",
+                        "title": "1.0"
+                      },
+                      {
+                        "score": 0.0,
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "json_explanation": [
+                    {
+                      "explanation": "[{\"explanation\": \"The statement directly confirms the width of the Earth as given in the premise.\", \"tag\": \"ENT\", \"statement\": \"The diameter of Earth is about 12,742 km.\"}]",
+                      "hypothesis": "The diameter of Earth is about 12,742 km.",
+                      "inference": 1.0,
+                      "premise": [
+                        "What is the diameter of Earth?\nEarth is 12,742 km wide."
+                      ]
+                    }
+                  ]
                 },
                 "type": "value",
                 "value": 1.0
               },
               "context_to_answer": {
                 "details": {
-                  "highlight": "{\"corpus\": [{\"text\": \"Earth is 12,742 km wide.\", \"score\": -1.0, \"title\": 0.0}, {\"text\": \"\", \"score\": 0.0}]}",
-                  "json_explanation": "[{\"inference\": 0.0, \"hypothesis\": \"Earth is 12,742 km wide.\", \"premise\": [\"Earth facts\"], \"explanation\": \"[{\\\"explanation\\\": \\\"The premise is too general and does not provide the specific width of the Earth, making this statement neutral.\\\", \\\"tag\\\": \\\"NEUT\\\", \\\"statement\\\": \\\"Earth is 12,742 km wide.\\\"}]\"}]"
+                  "highlight": {
+                    "corpus": [
+                      {
+                        "score": -1.0,
+                        "text": "Earth is 12,742 km wide.",
+                        "title": "0.0"
+                      },
+                      {
+                        "score": 0.0,
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "json_explanation": [
+                    {
+                      "explanation": "[{\"explanation\": \"The premise is too general and does not provide the specific width of the Earth, making this statement neutral.\", \"tag\": \"NEUT\", \"statement\": \"Earth is 12,742 km wide.\"}]",
+                      "hypothesis": "Earth is 12,742 km wide.",
+                      "inference": 0.0,
+                      "premise": [
+                        "Earth facts"
+                      ]
+                    }
+                  ]
                 },
                 "type": "value",
                 "value": 0.0
@@ -517,8 +1189,29 @@
               },
               "ground_truth_to_answer": {
                 "details": {
-                  "highlight": "{\"corpus\": [{\"text\": \"Earth is 12,742 km wide.\", \"score\": 0.0, \"title\": 1.0}, {\"text\": \"\", \"score\": 0.0}]}",
-                  "json_explanation": "[{\"inference\": 1.0, \"hypothesis\": \"Earth is 12,742 km wide.\", \"premise\": [\"What is the diameter of Earth?\nThe diameter of Earth is about 12,742 km.\"], \"explanation\": \"[{\\\"explanation\\\": \\\"The statement directly restates the diameter of Earth as given in the premise.\\\", \\\"tag\\\": \\\"ENT\\\", \\\"statement\\\": \\\"Earth is 12,742 km wide.\\\"}]\"}]"
+                  "highlight": {
+                    "corpus": [
+                      {
+                        "score": 0.0,
+                        "text": "Earth is 12,742 km wide.",
+                        "title": "1.0"
+                      },
+                      {
+                        "score": 0.0,
+                        "text": ""
+                      }
+                    ]
+                  },
+                  "json_explanation": [
+                    {
+                      "explanation": "[{\"explanation\": \"The statement directly restates the diameter of Earth as given in the premise.\", \"tag\": \"ENT\", \"statement\": \"Earth is 12,742 km wide.\"}]",
+                      "hypothesis": "Earth is 12,742 km wide.",
+                      "inference": 1.0,
+                      "premise": [
+                        "What is the diameter of Earth?\nThe diameter of Earth is about 12,742 km."
+                      ]
+                    }
+                  ]
                 },
                 "type": "value",
                 "value": 1.0
@@ -536,7 +1229,20 @@
               "recall": {
                 "details": {
                   "context_highlight": [
-                    "{\"match\": [{\"text\": \"Earth fact\", \"facts\": [0]}, {\"text\": \"s\", \"facts\": []}]}"
+                    {
+                      "match": [
+                        {
+                          "facts": [
+                            0
+                          ],
+                          "text": "Earth fact"
+                        },
+                        {
+                          "facts": [],
+                          "text": "s"
+                        }
+                      ]
+                    }
                   ],
                   "context_relevance": [
                     1
@@ -623,6 +1329,126 @@
                   "reason": "The actual output exactly matches the expected output.",
                   "verbose_logs": "Criteria:\nDetermine whether the actual output is factually correct based on the expected output."
                 },
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "ragas.faithfulness",
+            "output": {
+              "score": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "ragas.context_precision",
+            "output": {
+              "score": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "ragas.context_recall",
+            "output": {
+              "score": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "ragas.answer_relevancy",
+            "output": {
+              "score": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "ragas.noise_sensitivity",
+            "output": {
+              "score": {
+                "details": {},
+                "type": "value",
+                "value": 0.0
+              }
+            }
+          },
+          {
+            "metric_name": "ragas.tool_call_accuracy",
+            "output": {
+              "score": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "ragas.tool_call_f1",
+            "output": {
+              "score": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "deepdiff",
+            "output": {
+              "match": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "deepdiff",
+            "output": {
+              "match": {
+                "details": {
+                  "diff": {
+                    "values_changed": {
+                      "root": {
+                        "new_value": "wrong answer",
+                        "old_value": "test answer"
+                      }
+                    }
+                  },
+                  "pretty": "Value of root changed from \"test answer\" to \"wrong answer\"."
+                },
+                "type": "value",
+                "value": 0.0
+              }
+            }
+          },
+          {
+            "metric_name": "deepdiff",
+            "output": {
+              "match": {
+                "details": {},
+                "type": "value",
+                "value": 1.0
+              }
+            }
+          },
+          {
+            "metric_name": "deepdiff",
+            "output": {
+              "match": {
+                "details": {},
                 "type": "value",
                 "value": 1.0
               }
@@ -781,6 +1607,13 @@
           "type": {
             "type": "string",
             "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
           }
         },
         "type": "object",

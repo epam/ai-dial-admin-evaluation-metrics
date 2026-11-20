@@ -14,6 +14,7 @@ from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.input_types import 
     GroundTruthFactsInput,
 )
 from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.retrieval_output import (
+    ContextHighlight,
     F1ScoreOutput,
     MrrOutput,
     PrecisionOutput,
@@ -103,7 +104,11 @@ class RetrievalMetric(BaseMetric):
                     details=RecallDetails(
                         facts_ranks=[1, -1],
                         context_relevance=[0, 1, 0],
-                        context_highlight=["", "", ""],
+                        context_highlight=[
+                            ContextHighlight(match=[]),
+                            ContextHighlight(match=[]),
+                            ContextHighlight(match=[]),
+                        ],
                     ),
                 ),
                 f1=MetricOutputField(value=0.57),

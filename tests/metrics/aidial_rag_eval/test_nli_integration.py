@@ -46,7 +46,9 @@ def test_nli_direct_evaluation_with_real_llm(test_dial_config):
     assert (
         result.inference.details.json_explanation
     ), "Missing json_explanation in details"
-    assert result.inference.details.highlight, "Missing highlight in details"
+    assert (
+        result.inference.details.highlight.corpus
+    ), "Missing highlight in details"
 
     # The actual value depends on the LLM response, but for this highly
     # similar premise/hypothesis pair, we expect a relatively high score

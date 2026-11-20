@@ -23,6 +23,8 @@ from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.generation_output i
     GroundTruthToAnswerField,
     InferenceDetails,
     InferenceField,
+    InferenceHighlight,
+    InferenceHighlightItem,
     extract_generation_metric,
     extract_row,
     output_error,
@@ -41,6 +43,8 @@ from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.retrieval import (
     get_matcher_type,
 )
 from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.retrieval_output import (
+    ContextHighlight,
+    ContextHighlightItem,
     F1ScoreOutput,
     MrrOutput,
     PrecisionOutput,
@@ -125,7 +129,14 @@ class RagEvalMetric(BaseLLMMetric):
                         facts_ranks=[0],
                         context_relevance=[1],
                         context_highlight=[
-                            '{"match": [{"text": "Earth fact", "facts": [0]}, {"text": "s", "facts": []}]}'
+                            ContextHighlight(
+                                match=[
+                                    ContextHighlightItem(
+                                        text="Earth fact", facts=[0]
+                                    ),
+                                    ContextHighlightItem(text="s", facts=[]),
+                                ]
+                            )
                         ],
                     ),
                 ),
@@ -135,22 +146,74 @@ class RagEvalMetric(BaseLLMMetric):
                 ground_truth_to_answer=InferenceField(
                     value=1.0,
                     details=InferenceDetails(
-                        json_explanation='[{"inference": 1.0, "hypothesis": "Earth is 12,742 km wide.", "premise": ["What is the diameter of Earth?\nThe diameter of Earth is about 12,742 km."], "explanation": "[{\\"explanation\\": \\"The statement directly restates the diameter of Earth as given in the premise.\\", \\"tag\\": \\"ENT\\", \\"statement\\": \\"Earth is 12,742 km wide.\\"}]"}]',
-                        highlight='{"corpus": [{"text": "Earth is 12,742 km wide.", "score": 0.0, "title": 1.0}, {"text": "", "score": 0.0}]}',
+                        json_explanation=[
+                            {
+                                "inference": 1.0,
+                                "hypothesis": "Earth is 12,742 km wide.",
+                                "premise": [
+                                    "What is the diameter of Earth?\nThe diameter of Earth is about 12,742 km."
+                                ],
+                                "explanation": '[{"explanation": "The statement directly restates the diameter of Earth as given in the premise.", "tag": "ENT", "statement": "Earth is 12,742 km wide."}]',
+                            }
+                        ],
+                        highlight=InferenceHighlight(
+                            corpus=[
+                                InferenceHighlightItem(
+                                    text="Earth is 12,742 km wide.",
+                                    score=0.0,
+                                    title="1.0",
+                                ),
+                                InferenceHighlightItem(text="", score=0.0),
+                            ]
+                        ),
                     ),
                 ),
                 answer_to_ground_truth=InferenceField(
                     value=1.0,
                     details=InferenceDetails(
-                        json_explanation='[{"inference": 1.0, "hypothesis": "The diameter of Earth is about 12,742 km.", "premise": ["What is the diameter of Earth?\nEarth is 12,742 km wide."], "explanation": "[{\\"explanation\\": \\"The statement directly confirms the width of the Earth as given in the premise.\\", \\"tag\\": \\"ENT\\", \\"statement\\": \\"The diameter of Earth is about 12,742 km.\\"}]"}]',
-                        highlight='{"corpus": [{"text": "The diameter of Earth is about 12,742 km.", "score": 0.0, "title": 1.0}, {"text": "", "score": 0.0}]}',
+                        json_explanation=[
+                            {
+                                "inference": 1.0,
+                                "hypothesis": "The diameter of Earth is about 12,742 km.",
+                                "premise": [
+                                    "What is the diameter of Earth?\nEarth is 12,742 km wide."
+                                ],
+                                "explanation": '[{"explanation": "The statement directly confirms the width of the Earth as given in the premise.", "tag": "ENT", "statement": "The diameter of Earth is about 12,742 km."}]',
+                            }
+                        ],
+                        highlight=InferenceHighlight(
+                            corpus=[
+                                InferenceHighlightItem(
+                                    text="The diameter of Earth is about 12,742 km.",
+                                    score=0.0,
+                                    title="1.0",
+                                ),
+                                InferenceHighlightItem(text="", score=0.0),
+                            ]
+                        ),
                     ),
                 ),
                 context_to_answer=InferenceField(
                     value=0.0,
                     details=InferenceDetails(
-                        json_explanation='[{"inference": 0.0, "hypothesis": "Earth is 12,742 km wide.", "premise": ["Earth facts"], "explanation": "[{\\"explanation\\": \\"The premise is too general and does not provide the specific width of the Earth, making this statement neutral.\\", \\"tag\\": \\"NEUT\\", \\"statement\\": \\"Earth is 12,742 km wide.\\"}]"}]',
-                        highlight='{"corpus": [{"text": "Earth is 12,742 km wide.", "score": -1.0, "title": 0.0}, {"text": "", "score": 0.0}]}',
+                        json_explanation=[
+                            {
+                                "inference": 0.0,
+                                "hypothesis": "Earth is 12,742 km wide.",
+                                "premise": ["Earth facts"],
+                                "explanation": '[{"explanation": "The premise is too general and does not provide the specific width of the Earth, making this statement neutral.", "tag": "NEUT", "statement": "Earth is 12,742 km wide."}]',
+                            }
+                        ],
+                        highlight=InferenceHighlight(
+                            corpus=[
+                                InferenceHighlightItem(
+                                    text="Earth is 12,742 km wide.",
+                                    score=-1.0,
+                                    title="0.0",
+                                ),
+                                InferenceHighlightItem(text="", score=0.0),
+                            ]
+                        ),
                     ),
                 ),
             ),

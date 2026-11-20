@@ -64,8 +64,13 @@ def test_retrieval_evaluate_via_api(app_client):
                     "facts_ranks": [0, -1],
                     "context_relevance": [1, 0],
                     "context_highlight": [
-                        '{"match": [{"text": "has ", "facts": []}, {"text": "fact1", "facts": [0]}]}',
-                        '{"match": [{"text": "unrelated", "facts": []}]}',
+                        {
+                            "match": [
+                                {"text": "has ", "facts": []},
+                                {"text": "fact1", "facts": [0]},
+                            ]
+                        },
+                        {"match": [{"text": "unrelated", "facts": []}]},
                     ],
                 },
             },
@@ -109,9 +114,34 @@ def test_retrieval_example_via_api(app_client):
                     "facts_ranks": [1, -1],
                     "context_relevance": [0, 1, 0],
                     "context_highlight": [
-                        '{"match": [{"text": "The Earth, our home planet, is the third planet from the sun.", "facts": []}]}',
-                        '{"match": [{"text": "It\'s the only planet known to have an atmosphere containing free oxygen and oceans of liquid water on its surface. ", "facts": []}, {"text": "The diameter of the Earth is approximately 12,742 kilometers.", "facts": [0]}]}',
-                        '{"match": [{"text": "The Pacific Ocean is extending from the Arctic Ocean in the north to the Southern Ocean in the south.", "facts": []}]}',
+                        {
+                            "match": [
+                                {
+                                    "text": "The Earth, our home planet, is the third planet from the sun.",
+                                    "facts": [],
+                                }
+                            ]
+                        },
+                        {
+                            "match": [
+                                {
+                                    "text": "It's the only planet known to have an atmosphere containing free oxygen and oceans of liquid water on its surface. ",
+                                    "facts": [],
+                                },
+                                {
+                                    "text": "The diameter of the Earth is approximately 12,742 kilometers.",
+                                    "facts": [0],
+                                },
+                            ]
+                        },
+                        {
+                            "match": [
+                                {
+                                    "text": "The Pacific Ocean is extending from the Arctic Ocean in the north to the Southern Ocean in the south.",
+                                    "facts": [],
+                                }
+                            ]
+                        },
                     ],
                 },
             },
@@ -152,7 +182,12 @@ def test_retrieval_perfect_match_via_api(app_client):
                     "facts_ranks": [0],
                     "context_relevance": [1],
                     "context_highlight": [
-                        '{"match": [{"text": "This contains ", "facts": []}, {"text": "fact1", "facts": [0]}]}',
+                        {
+                            "match": [
+                                {"text": "This contains ", "facts": []},
+                                {"text": "fact1", "facts": [0]},
+                            ]
+                        },
                     ],
                 },
             },
@@ -189,8 +224,8 @@ def test_retrieval_no_match_via_api(app_client):
                     "facts_ranks": [-1],
                     "context_relevance": [0, 0],
                     "context_highlight": [
-                        '{"match": [{"text": "unrelated content", "facts": []}]}',
-                        '{"match": [{"text": "more unrelated", "facts": []}]}',
+                        {"match": [{"text": "unrelated content", "facts": []}]},
+                        {"match": [{"text": "more unrelated", "facts": []}]},
                     ],
                 },
             },
@@ -262,8 +297,8 @@ def test_retrieval_json_serialization(app_client):
                     "facts_ranks": [0, -1],
                     "context_relevance": [1, 0],
                     "context_highlight": [
-                        '{"match": [{"text": "fact1", "facts": [0]}]}',
-                        '{"match": [{"text": "other", "facts": []}]}',
+                        {"match": [{"text": "fact1", "facts": [0]}]},
+                        {"match": [{"text": "other", "facts": []}]},
                     ],
                 },
             },
@@ -300,8 +335,8 @@ def test_retrieval_details_list_lengths(app_client):
                     "facts_ranks": [-1, -1, -1],
                     "context_relevance": [0, 0],
                     "context_highlight": [
-                        '{"match": [{"text": "context1", "facts": []}]}',
-                        '{"match": [{"text": "context2", "facts": []}]}',
+                        {"match": [{"text": "context1", "facts": []}]},
+                        {"match": [{"text": "context2", "facts": []}]},
                     ],
                 },
             },
@@ -359,8 +394,8 @@ def test_retrieval_exact_matcher_via_api(app_client):
                     "facts_ranks": [0],
                     "context_relevance": [1, 0],
                     "context_highlight": [
-                        '{"match": [{"text": "fact1", "facts": [0]}]}',
-                        '{"match": [{"text": "other", "facts": []}]}',
+                        {"match": [{"text": "fact1", "facts": [0]}]},
+                        {"match": [{"text": "other", "facts": []}]},
                     ],
                 },
             },

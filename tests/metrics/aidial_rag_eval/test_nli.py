@@ -69,3 +69,15 @@ def test_nli_metric_output_schema():
     fields = metric.Output.model_fields
 
     assert "inference" in fields
+
+
+def test_inference_highlight_title_converted_to_str():
+    from aidial_admin_evaluation_metrics.metrics.aidial_rag_eval.generation_output import (
+        InferenceHighlight,
+    )
+
+    highlight = InferenceHighlight.model_validate_json(
+        '{"corpus": [{"text": "a", "score": -1.0, "title": 0.0}, {"text": " ", "score": 0.0}]}'
+    )
+    assert highlight.corpus[0].title == "0.0"
+    assert highlight.corpus[1].title is None
