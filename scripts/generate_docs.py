@@ -4,6 +4,7 @@ Uses only FastAPI's built-in tools - no external dependencies needed.
 """
 
 import argparse
+import asyncio
 import json
 from pathlib import Path
 
@@ -15,9 +16,19 @@ from aidial_admin_evaluation_metrics.app import create_app
 from aidial_admin_evaluation_metrics.app_config import AppSettings
 
 
+async def build_openapi_schema(app: FastAPI) -> dict:
+    """Build the OpenAPI schema with the app lifespan running.
+
+    Request and response examples are generated from the metrics registry,
+    which is created in the app lifespan, so it has to be started first.
+    """
+    async with app.router.lifespan_context(app):
+        return app.openapi()
+
+
 def export_openapi_schema(app: FastAPI, output_path: Path) -> None:
     """Export OpenAPI schema to JSON file."""
-    openapi_schema = app.openapi()
+    openapi_schema = asyncio.run(build_openapi_schema(app))
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, "w", newline="\n") as f:

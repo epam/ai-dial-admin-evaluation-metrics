@@ -41,18 +41,18 @@ def test_generation_direct_evaluation_with_real_llm(test_dial_config):
     print(result)
     assert result.ground_truth_to_answer.type == "value"
     assert result.ground_truth_to_answer.value == 1.0
-    assert result.ground_truth_to_answer.details.json_explanation != ""
-    assert result.ground_truth_to_answer.details.highlight != ""
+    assert result.ground_truth_to_answer.details.json_explanation
+    assert result.ground_truth_to_answer.details.highlight.corpus
 
     assert result.answer_to_ground_truth.type == "value"
     assert result.answer_to_ground_truth.value == 1.0
-    assert result.answer_to_ground_truth.details.json_explanation != ""
-    assert result.answer_to_ground_truth.details.highlight != ""
+    assert result.answer_to_ground_truth.details.json_explanation
+    assert result.answer_to_ground_truth.details.highlight.corpus
 
     assert result.context_to_answer.type == "value"
     assert result.context_to_answer.value == 1.0
-    assert result.context_to_answer.details.json_explanation != ""
-    assert result.context_to_answer.details.highlight != ""
+    assert result.context_to_answer.details.json_explanation
+    assert result.context_to_answer.details.highlight.corpus
 
 
 @pytest.mark.integration
@@ -84,18 +84,18 @@ def test_generation_evaluate_via_api(app_client):
 
     assert parsed_result.ground_truth_to_answer.type == "value"
     assert parsed_result.ground_truth_to_answer.value == 1.0
-    assert parsed_result.ground_truth_to_answer.details.json_explanation != ""
-    assert parsed_result.ground_truth_to_answer.details.highlight != ""
+    assert parsed_result.ground_truth_to_answer.details.json_explanation
+    assert parsed_result.ground_truth_to_answer.details.highlight.corpus
 
     assert parsed_result.answer_to_ground_truth.type == "value"
     assert parsed_result.answer_to_ground_truth.value == 1.0
-    assert parsed_result.answer_to_ground_truth.details.json_explanation != ""
-    assert parsed_result.answer_to_ground_truth.details.highlight != ""
+    assert parsed_result.answer_to_ground_truth.details.json_explanation
+    assert parsed_result.answer_to_ground_truth.details.highlight.corpus
 
     assert parsed_result.context_to_answer.type == "value"
     assert parsed_result.context_to_answer.value == 1.0
-    assert parsed_result.context_to_answer.details.json_explanation != ""
-    assert parsed_result.context_to_answer.details.highlight != ""
+    assert parsed_result.context_to_answer.details.json_explanation
+    assert parsed_result.context_to_answer.details.highlight.corpus
 
 
 @pytest.mark.integration
@@ -129,18 +129,18 @@ def test_generation_evaluate_via_api_partial(app_client):
     # and the moon statement contradicts the ground truth
     assert parsed_result.ground_truth_to_answer.type == "value"
     assert parsed_result.ground_truth_to_answer.value == pytest.approx(1.0 / 3)
-    assert parsed_result.ground_truth_to_answer.details.json_explanation != ""
-    assert parsed_result.ground_truth_to_answer.details.highlight != ""
+    assert parsed_result.ground_truth_to_answer.details.json_explanation
+    assert parsed_result.ground_truth_to_answer.details.highlight.corpus
 
     # The diameter statement could be entailed from the answer,
     # but the number of moons statement contradicts the answer,
     assert parsed_result.answer_to_ground_truth.type == "value"
     assert parsed_result.answer_to_ground_truth.value == pytest.approx(0.5)
-    assert parsed_result.answer_to_ground_truth.details.json_explanation != ""
-    assert parsed_result.answer_to_ground_truth.details.highlight != ""
+    assert parsed_result.answer_to_ground_truth.details.json_explanation
+    assert parsed_result.answer_to_ground_truth.details.highlight.corpus
 
     # The diameter and being third planet are entailed from the context, but the moon statement is not
     assert parsed_result.context_to_answer.type == "value"
     assert parsed_result.context_to_answer.value == pytest.approx(2.0 / 3)
-    assert parsed_result.context_to_answer.details.json_explanation != ""
-    assert parsed_result.context_to_answer.details.highlight != ""
+    assert parsed_result.context_to_answer.details.json_explanation
+    assert parsed_result.context_to_answer.details.highlight.corpus
